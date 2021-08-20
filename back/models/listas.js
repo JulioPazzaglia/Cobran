@@ -8,6 +8,7 @@ Listas.init(
     name: {
       type: S.STRING,
       allowNull: false,
+      unique: { msg: "Este lista ya existe" },
     },
     gastosTotales: {
       type: S.INTEGER,
