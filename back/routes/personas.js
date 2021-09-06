@@ -14,11 +14,11 @@ router.get("/find/:id", (req, res, next) => {
     .catch((err) => res.send(err));
 });
 
-router.get("/search", (req, res, next) => {
+router.get("/search/:name", (req, res, next) => {
   Personas.findAll({
     where: {
       name: {
-        [Op.like]: `%${req.body.persona}%`,
+        [Op.like]: `%${req.params.name}%`,
       },
     },
   })
@@ -40,6 +40,22 @@ router.put("/edit/:id", (req, res, next) => {
   Personas.findByPk(req.params.id)
     .then((persona) => {
       persona.update(req.body).then((updated) => res.send(updated));
+    })
+    .catch((err) => res.send(err));
+});
+
+router.put("/pago/:id", (req, res, next) => {
+  const listId = req.body.listId;
+  Personas.findByPk(req.params.id)
+    .then((persona) => {
+      if (persona.pagos.includes(listId)) {
+        var lista = persona.pagos.filter((value) => value != listId);
+        persona.update({ pagos: lista }).then((updated) => res.send(updated));
+      } else {
+        persona
+          .update({ pagos: [...persona.pagos, req.body.listId] })
+          .then((updated) => res.send(updated));
+      }
     })
     .catch((err) => res.send(err));
 });

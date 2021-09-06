@@ -14,6 +14,9 @@ Listas.init(
       type: S.INTEGER,
       allowNull: false,
     },
+    fecha: {
+      type: S.STRING
+    },
   },
   { sequelize: db, modelName: "listas" }
 );
