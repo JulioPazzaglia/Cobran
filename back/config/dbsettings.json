@@ -1,9 +1,0 @@
-{
-    "database": "Cobran",
-    "options": {
-        "dialect": "postgres",
-        "host": "localhost",
-        "port": 5432,
-        "logging": false
-    }
-}
