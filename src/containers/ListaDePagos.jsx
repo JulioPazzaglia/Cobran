@@ -13,12 +13,14 @@ import SearchDisplay from "../components/SearchDisplay";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPersonasListadas, putPagos } from "../store/personasListadas";
-import { getSearch } from "../store/personas"
+import { getPersonasListadas, putPagos, putLink, deleteLink } from "../store/personasListadas";
+import { getSearch, postPersona } from "../store/personas"
 
 function ListaDePagos({ route }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [searching, setSearching] = React.useState(false);
+  const [input, setInput] = React.useState("");
+  const [edit, setEdit] = React.useState(false);
 
   //Dispatch and retrieve stuff
   const { listId } = route.params;
@@ -45,11 +47,13 @@ function ListaDePagos({ route }) {
   };
 
   //Searchbar stuff
+
   const search = (focus) => {
     if (focus) {
       setSearching(true);
     } else {
       setSearching(false);
+      setInput("")
     }
   };
 
@@ -58,6 +62,35 @@ function ListaDePagos({ route }) {
   }
 
   const searchPersonas = useSelector((state) => state.searchPersonas);
+
+  //Add people stuff
+  const linkPersonas = (idPersona) => {
+    const body = {
+      persona: idPersona,
+      lista: listId
+    }
+    dispatch(putLink(body))
+    .then(()=>dispatch(getPersonasListadas(listId)))
+  }
+
+  const unlinkPersonas = (idPersona) => {
+    const body = {
+      persona: idPersona,
+      lista: listId
+    }
+    dispatch(deleteLink(body))
+    .then(()=>dispatch(getPersonasListadas(listId)))
+  }
+
+  const postPersonas = () => {
+    const body = {
+      name: input
+    }
+    dispatch(postPersona(body))
+    .then((persona) => linkPersonas(persona.payload.id))
+    .then(()=>dispatch(getPersonasListadas(listId)))
+    .then(search(false))
+  }
 
   //Refresh stuff
   const wait = (timeout) => {
@@ -103,25 +136,31 @@ function ListaDePagos({ route }) {
             <View style={Styles.personasItems}>
               <TextInput
                 style={Styles.textInput}
-                onChangeText={(e) => searchDispatch(e)}
+                onChangeText={(e) => {
+                  setInput(e)
+                  searchDispatch(e)
+                }}
+                value = {input}
                 placeholder={"Agregar a la lista..."}
                 onFocus={() => search(true)}
-                onEndEditing={() => search(false)}
-                autoCapitalize = {"none"}
+                onSubmitEditing = {()=> search(false)}
               />
               <TouchableOpacity style={Styles.buttons}>
                 <Text>🔎</Text>
               </TouchableOpacity>
             </View>
             {searching &&
-              <SearchDisplay 
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              search={search}
-              list = {searchPersonas}
-              />
+              <View>
+                <SearchDisplay 
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                list = {searchPersonas}
+                linkPersonas = {linkPersonas}
+                postPersona = {postPersonas}
+                />
+              </View>
+
             }
-              {/* Aca va el display de los buscados (acordate de hacerlo condicional a searching) */}
             {lista.personas.length > 0 ? (
               <DisplayPersonas
                 personas={lista.personas}
@@ -129,11 +168,16 @@ function ListaDePagos({ route }) {
                 refreshing={refreshing}
                 onRefresh={onRefresh}
                 PagoHandler={PagoHandler}
+                edit = {edit}
+                unlinkPersonas = {unlinkPersonas}
               />
             ) : (
-              <Text>No hay perosnas en esta lista</Text>
+              <Text style={{height: 490}}>No hay personas en esta lista</Text>
             )}
           </View>
+            <TouchableOpacity style={Styles.ajustes} onPress = {()=> setEdit(!edit)}>
+                <Text style={{fontWeight:"bold"}}>{edit?"Terminar ajustes":"Ajustes"}</Text>
+            </TouchableOpacity>
         </View>
       )}
     </SafeAreaView>

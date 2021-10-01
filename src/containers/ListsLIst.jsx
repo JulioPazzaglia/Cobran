@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View} from "react-native";
 import Styles from "../styles/StylesSheet";
 
-import { getListas } from "../store/listas";
+import { getListas, deleteLista } from "../store/listas";
 import { useSelector, useDispatch } from "react-redux";
 
 import ListDisplay from "../components/ListDisplay";
 
 function ListsList({ navigation }) {
+
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [edit, setEdit] = React.useState(false)
 
   const touch = (id) => {
     navigation.navigate("Lists", {listId: id});
@@ -28,7 +31,10 @@ function ListsList({ navigation }) {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const delList = (id) => {
+    dispatch(deleteLista(id))
+    .then(()=>dispatch(getListas()))
+  }
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -46,9 +52,11 @@ function ListsList({ navigation }) {
           </TouchableOpacity>
         </View>
         <View>
-          <Text>{Listas.length > 0 ? "" : `no hay listas!`}</Text>
-          <ListDisplay Listas={Listas} touch={touch} refreshing ={refreshing} onRefresh = {onRefresh} />
+          {Array.isArray(Listas)? <ListDisplay Listas={Listas} touch={touch} refreshing ={refreshing} onRefresh = {onRefresh} edit = {edit} delList = {delList}/>:<Text style={{height: 530}}>no hay listas!</Text>}
         </View>
+        <TouchableOpacity style={Styles.ajustesList} onPress = {()=> setEdit(!edit)}>
+          <Text style={{fontWeight:"bold"}}>{edit?"Terminar ajustes":"Ajustes"}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -14,10 +14,12 @@ function PersonasDisplay(props) {
   const listId = props.id
   const refreshing = props.refreshing;
   const onRefresh = props.onRefresh;
-  const PagoHandler = props.PagoHandler
+  const PagoHandler = props.PagoHandler;
+  const edit = props.edit;
+  const unlinkPersonas = props.unlinkPersonas;
 
   return (
-    <View style={{ height: 570 }}>
+    <View style={{height: 490}}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -28,7 +30,7 @@ function PersonasDisplay(props) {
             return (
               <View key={persona.id} style={Styles.personasItems}>
                 <Text style={{fontSize:25}}>{persona.name}</Text>
-                <TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>{persona.pagos.includes(listId)?"✔️":"❌"}</Text></TouchableOpacity>
+                {edit?<TouchableOpacity style={Styles.unlink} onPress = {()=> unlinkPersonas(persona.id)}><Text>Eliminar de la lista</Text></TouchableOpacity>:<TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>{persona.pagos.includes(listId)?"✔️":"❌"}</Text></TouchableOpacity>}
               </View>
             );
           })}

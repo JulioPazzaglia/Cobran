@@ -7,14 +7,17 @@ import { useDispatch } from "react-redux"
 
 import NumericInput from "react-native-numeric-input";
 
-function ListsList() {
+function ListsList({navigation}) {
 
   const dispatch = useDispatch()
 
   const [name, setName] = useState("");
   const [monto, setMonto] = useState(0)
-  const [dia, setDia] = useState("0")
-  const [mes, setMes] = useState("0")
+
+  let date = new Date
+
+  const [dia, setDia] = useState(date.getDay.toString())
+  const [mes, setMes] = useState(date.getMonth.toString())
 
   const createLista = () => {
     const body = {
@@ -24,7 +27,10 @@ function ListsList() {
     }
     if(name){
       dispatch(postLista(body))
-      .then(()=>alert("Lista creada"))
+      .then(()=>{
+        alert("Lista creada")
+        navigation.goBack()
+      })
     }
   }
 

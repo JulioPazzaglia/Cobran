@@ -14,7 +14,9 @@ function SearchDisplay(props) {
   const onRefresh = props.onRefresh;
 
   const personas = props.list
-  const search = props.search
+
+  const linkPersonas = props.linkPersonas
+  const postPersona = props.postPersona
 
   return (
     <View style={{ height: 570 }}>
@@ -28,10 +30,15 @@ function SearchDisplay(props) {
             return (
               <View key={persona.id} style={Styles.personasItems}>
                 <Text style={{fontSize:25}}>{persona.name}</Text>
-                <TouchableOpacity style={Styles.buttons} onPress = {()=>search(persona.id)}><Text>➕</Text></TouchableOpacity>
+                <TouchableOpacity style={Styles.buttons} onPress = {()=>linkPersonas(persona.id)}><Text>➕</Text></TouchableOpacity>
               </View>
             );
           })}
+        <TouchableOpacity 
+        style={Styles.personasButon}
+        onPress = {()=> postPersona()}>
+          <Text>Crear usuario</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

@@ -14,16 +14,18 @@ function ListDisplay(props) {
   const touch = props.touch;
   const refreshing = props.refreshing;
   const onRefresh = props.onRefresh;
+  const edit = props.edit
+  const delList = props.delList;
 
   return (
-    <View style={{ height: 570, flexDirection: "column-reverse"}}>
+    <View style={{ height: 530, flexDirection: "column-reverse"}}>
       <ScrollView
         style={{flexDirection: "column"}}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {Listas.length > 0 &&
+        {Listas.length > 0? (
           Listas.slice(0).reverse().map((lista) => {
             return (
               <TouchableOpacity
@@ -32,11 +34,14 @@ function ListDisplay(props) {
                 underlayColor={"#ff5733"}
                 key={lista.id}
               >
-                <Text>{lista.name}</Text>
-                <Text>{lista.fecha}</Text>
+                <Text style = {edit?{right:70, top:25,}:{right:0}} >{lista.name}</Text>
+                <Text style = {edit?{right:70, top:25,}:{right:0}}>{lista.fecha}</Text>
+                {edit?<TouchableOpacity style = {Styles.unlinkList} onPress = {()=> delList(lista.id)}><Text>Eliminar lista</Text></TouchableOpacity>:<View></View>}
               </TouchableOpacity>
             );
-          })}
+          })):(
+            <Text>No hay listas!</Text>
+          )}
       </ScrollView>
     </View>
   );
