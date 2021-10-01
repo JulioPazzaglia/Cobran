@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Personas, Listas, Lista_personas } = require("../models");
+const { Personas, Listas} = require("../models");
 
 router.put("/", (req, res, next) =>{
     Personas.findByPk(req.body.persona)
@@ -8,6 +8,18 @@ router.put("/", (req, res, next) =>{
         .then(lista => {
             lista.addPersonas(persona)
             res.send("Agregado a la lista").status(200)
+        })
+    })
+    .catch((err) => res.send(err));
+})
+
+router.delete("/:persona/:lista", (req, res, next) =>{
+    Personas.findByPk(req.params.persona)
+    .then((persona)=>{
+        Listas.findByPk(req.params.lista)
+        .then(lista => {
+            lista.removePersonas(persona)
+            res.send("eliminado de la lista").status(200)
         })
     })
     .catch((err) => res.send(err));
