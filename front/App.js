@@ -20,7 +20,6 @@ function App() {
           <Stack.Screen name="Home" component={ListsList} />
           <Stack.Screen
             name="Lists"
-            // options={{ title: "Lista de cobros" }}
             component={ListaDePagos}
           />
           <Stack.Screen name="NewList" component={NewList} options={{ title: "Crear nueva lista" }}/>

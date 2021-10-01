@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, TextInput, View, Text, TouchableOpacity } from "react-native";
 import Styles from "../styles/StylesSheet";
 
-import { postLista } from "../store/listas";
+import { postLista, getListas } from "../store/listas";
 import { useDispatch } from "react-redux"
 
 import NumericInput from "react-native-numeric-input";
@@ -28,6 +28,7 @@ function ListsList({navigation}) {
     if(name){
       dispatch(postLista(body))
       .then(()=>{
+        dispatch(getListas())
         alert("Lista creada")
         navigation.goBack()
       })
