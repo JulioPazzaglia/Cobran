@@ -16,8 +16,9 @@ function ListsList({navigation}) {
 
   let date = new Date
 
-  const [dia, setDia] = useState(date.getDay.toString())
-  const [mes, setMes] = useState(date.getMonth.toString())
+  const [dia, setDia] = useState(date.getUTCDate())
+  const [mes, setMes] = useState(date.getMonth())
+
 
   const createLista = () => {
     const body = {
@@ -52,6 +53,7 @@ function ListsList({navigation}) {
               <NumericInput
                 minValue={0}
                 maxValue={31}
+                value = {dia}
                 type="up-down"
                 rounded
                 totalWidth={75}
@@ -64,6 +66,7 @@ function ListsList({navigation}) {
               <NumericInput
                 minValue={0}
                 maxValue={12}
+                value = {mes}
                 type="up-down"
                 rounded
                 totalWidth={75}

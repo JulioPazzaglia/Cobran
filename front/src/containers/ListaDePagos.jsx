@@ -71,6 +71,7 @@ function ListaDePagos({ route }) {
     }
     dispatch(putLink(body))
     .then(()=>dispatch(getPersonasListadas(listId)))
+    .then(search(false))
   }
 
   const unlinkPersonas = (idPersona) => {
@@ -112,21 +113,21 @@ function ListaDePagos({ route }) {
             <View style={Styles.listaNombre}>
               <View>
                 <Text style={Styles.textSpace}>
-                  Monto total: {lista.gastosTotales}$
+                  Total Sum: {lista.gastosTotales}$
                 </Text>
                 <Text style={Styles.textSpace}>{`${
                   lista.personas.length
-                } persona${lista.personas.length === 1 ? "" : "s"}`}</Text>
+                } Payer${lista.personas.length === 1 ? "" : "s"}`}</Text>
               </View>
               <View>
                 <Text style={Styles.textSpace}>
-                  Monto actual:{" "}
+                  Sub Total:{" "}
                   {pagos *
                     Math.round(lista.gastosTotales / lista.personas.length)}
                   $
                 </Text>
                 <Text style={Styles.textSpace}>
-                  Monto per cápita:{" "}
+                  Payments:{" "}
                   {Math.round(lista.gastosTotales / lista.personas.length)}$
                 </Text>
               </View>

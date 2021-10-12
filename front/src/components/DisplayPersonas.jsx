@@ -29,8 +29,8 @@ function PersonasDisplay(props) {
           personas.slice(0).reverse().map((persona) => {
             return (
               <View key={persona.id} style={Styles.personasItems}>
-                <Text style={{fontSize:25}}>{persona.name}</Text>
-                {edit?<TouchableOpacity style={Styles.unlink} onPress = {()=> unlinkPersonas(persona.id)}><Text>Eliminar de la lista</Text></TouchableOpacity>:<TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>{persona.pagos.includes(listId)?"✔️":"❌"}</Text></TouchableOpacity>}
+                <Text style={{fontSize:22}}>{persona.name}</Text>
+                {edit?<TouchableOpacity style={Styles.unlink} onPress = {()=> unlinkPersonas(persona.id)}><Text>Eliminar de la lista</Text></TouchableOpacity>:persona.pagos.includes(listId)?<TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>✔️</Text></TouchableOpacity>:<TouchableOpacity style={Styles.buttonsX} onPress = {()=> PagoHandler(persona.id)}><Text>✖</Text></TouchableOpacity>}
               </View>
             );
           })}
