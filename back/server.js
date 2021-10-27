@@ -21,41 +21,41 @@ passport.use(
           email,
         },
       })
-        .then((user) => {
-          if (!user) {
+      .then((user) => {
+        if (!user) {
+          return done(null, false);
+        }
+        user.hash(password, user.salt).then((hash) => {
+          if (hash !== user.password) {
             return done(null, false);
           }
-          user.hash(password, user.salt).then((hash) => {
-            if (hash !== user.password) {
-              return done(null, false);
-            }
-            done(null, user);
-          });
-        })
-        .catch(done);
+          done(null, user);
+        });
+      })
+      .catch(done);
     }
-  )
-);
-
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findByPk(id).then((user) => done(null, user));
-});
-app.use("/api", require("./routes"));
-
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).send(err);
-});
-
-db.sync({ force: false })
-  .then(({ config }) => {
-    console.log(`Successful database connection to => ${config.database}`);
-    app.listen(PORT, () => console.log(`server listening at port ${PORT}`));
-  })
+    )
+    );
+    
+    passport.serializeUser(function (user, done) {
+      done(null, user.id);
+    });
+    
+    passport.deserializeUser(function (id, done) {
+      User.findByPk(id).then((user) => done(null, user));
+    });
+    app.use("/api", require("./routes"));
+    
+    app.use((err, req, res, next) => {
+      console.log(err);
+      res.status(500).send(err);
+    });
+    
+    db.sync({ force: false })
+    .then(({ config }) => {
+      console.log(`Successful database connection to => ${config.database}`);
+      app.listen(PORT, () => console.log(`server listening at port ${PORT}`));
+    })
   .catch((err) => {
     console.log("DB sync failed", err);
   });

@@ -46,7 +46,7 @@ function ListsList({ navigation }) {
     <SafeAreaView style={Styles.background}>
       <View style={Styles.list}>
         <View style={Styles.titulo}>
-          <Text style= {Styles.subtitulos}>Listas existentes:</Text>
+          <Text style= {Styles.subtitulos}>Your Lists:</Text>
           <TouchableOpacity style={Styles.buttons} onPress={NewList}>
             <Text>➕</Text>
           </TouchableOpacity>
@@ -55,7 +55,7 @@ function ListsList({ navigation }) {
           {Array.isArray(Listas)? <ListDisplay Listas={Listas} touch={touch} refreshing ={refreshing} onRefresh = {onRefresh} edit = {edit} delList = {delList}/>:<Text style={{height: 530}}>no hay listas!</Text>}
         </View>
         <TouchableOpacity style={Styles.ajustesList} onPress = {()=> setEdit(!edit)}>
-          <Text style={{fontWeight:"bold", color: "#000000"}}>{edit?"Terminar ajustes":"Ajustes"}</Text>
+          <Text style={{fontWeight:"bold", color: "#000000"}}>{edit?"Finish config":"Config"}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -1,21 +1,23 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
 
+var direccionIp = "192.168.1.10"
+
 export const getListas = createAsyncThunk("GET_LISTAS", () => {
   return axios
-    .get("http://192.168.1.31:3001/api/listas")
+    .get(`http://${direccionIp}:3001/api/listas`)
     .then((res) => res.data);
 });
 
 export const postLista = createAsyncThunk("POST_LISTA", (props) => {
   return axios
-    .post("http://192.168.1.31:3001/api/listas", props)
+    .post(`http://${direccionIp}:3001/api/listas`, props)
     .then((res) => res.data);
 });
 
 export const deleteLista = createAsyncThunk("DELETE_LISTA", (props) => {
   return axios
-    .delete(`http://192.168.1.31:3001/api/listas/delete/${props}`)
+    .delete(`http://${direccionIp}:3001/api/listas/delete/${props}`)
     .then((res) => res.data);
 });
 

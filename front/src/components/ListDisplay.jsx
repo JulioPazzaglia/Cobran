@@ -36,7 +36,7 @@ function ListDisplay(props) {
               >
                 <Text style = {edit?{right:70, top:25,}:{right:0}} >{lista.name}</Text>
                 <Text style = {edit?{right:70, top:25,}:{right:0}}>{lista.fecha}</Text>
-                {edit?<TouchableOpacity style = {Styles.unlinkList} onPress = {()=> delList(lista.id)}><Text>Eliminar lista</Text></TouchableOpacity>:<View></View>}
+                {edit?<TouchableOpacity style = {Styles.unlinkList} onPress = {()=> delList(lista.id)}><Text>Delete list</Text></TouchableOpacity>:<View></View>}
               </TouchableOpacity>
             );
           })):(

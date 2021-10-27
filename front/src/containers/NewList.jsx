@@ -30,7 +30,7 @@ function ListsList({navigation}) {
       dispatch(postLista(body))
       .then(()=>{
         dispatch(getListas())
-        alert("Lista creada")
+        alert("List created")
         navigation.goBack()
       })
     }
@@ -44,11 +44,11 @@ function ListsList({navigation}) {
             <TextInput
               style={Styles.textInput}
               onChangeText={(e) => setName(e)}
-              placeholder={"Nombre de la lista"}
+              placeholder={"Name of the list"}
             />
           </View>
           <View style={Styles.newListItems}>
-            <Text>Fecha:</Text>
+            <Text>Date:</Text>
             <View style={Styles.datePicker}>
               <NumericInput
                 minValue={0}
@@ -80,7 +80,7 @@ function ListsList({navigation}) {
           </View>
         </View>
         <View style={Styles.newListinput}>
-          <Text>Monto total:</Text>
+          <Text>Total amount:</Text>
           <NumericInput
             minValue={0}
             type="up-down"
@@ -97,7 +97,7 @@ function ListsList({navigation}) {
               style={Styles.buttonInput}
               underlayColor={"#77e681"}
             >
-          <Text>Crear</Text>
+          <Text>Create</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

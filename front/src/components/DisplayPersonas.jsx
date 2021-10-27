@@ -30,7 +30,7 @@ function PersonasDisplay(props) {
             return (
               <View key={persona.id} style={Styles.personasItems}>
                 <Text style={{fontSize:22}}>{persona.name}</Text>
-                {edit?<TouchableOpacity style={Styles.unlink} onPress = {()=> unlinkPersonas(persona.id)}><Text>Eliminar de la lista</Text></TouchableOpacity>:persona.pagos.includes(listId)?<TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>✔️</Text></TouchableOpacity>:<TouchableOpacity style={Styles.buttonsX} onPress = {()=> PagoHandler(persona.id)}><Text>✖</Text></TouchableOpacity>}
+                {edit?<TouchableOpacity style={Styles.unlink} onPress = {()=> unlinkPersonas(persona.id)}><Text>Delete from list</Text></TouchableOpacity>:persona.pagos.includes(listId)?<TouchableOpacity style={Styles.buttons} onPress = {()=> PagoHandler(persona.id)}><Text>✔️</Text></TouchableOpacity>:<TouchableOpacity style={Styles.buttonsX} onPress = {()=> PagoHandler(persona.id)}><Text>✖</Text></TouchableOpacity>}
               </View>
             );
           })}

@@ -37,7 +37,7 @@ function SearchDisplay(props) {
         <TouchableOpacity 
         style={Styles.personasButon}
         onPress = {()=> postPersona()}>
-          <Text>Crear usuario</Text>
+          <Text>Create user</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

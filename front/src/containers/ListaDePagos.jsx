@@ -142,7 +142,7 @@ function ListaDePagos({ route }) {
                   searchDispatch(e)
                 }}
                 value = {input}
-                placeholder={"Agregar a la lista..."}
+                placeholder={"Add to list..."}
                 onFocus={() => search(true)}
                 onSubmitEditing = {()=> search(false)}
               />
@@ -173,11 +173,11 @@ function ListaDePagos({ route }) {
                 unlinkPersonas = {unlinkPersonas}
               />
             ) : (
-              <Text style={{height: 490}}>No hay personas en esta lista</Text>
+              <Text style={{height: 490}}>No one has been added to this list</Text>
             )}
           </View>
             <TouchableOpacity style={Styles.ajustes} onPress = {()=> setEdit(!edit)}>
-                <Text style={{fontWeight:"bold"}}>{edit?"Terminar ajustes":"Ajustes"}</Text>
+                <Text style={{fontWeight:"bold"}}>{edit?"Ffinish Config":"Config"}</Text>
             </TouchableOpacity>
         </View>
       )}
